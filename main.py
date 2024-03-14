@@ -41,15 +41,15 @@ while True:
     for encodeFace, faceLoc in zip(encodeCurrFrame, faceCurrFrame):
         matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
         faceDist = face_recognition.face_distance(encodeListKnown, encodeFace)
-        print('matches', matches)
-        print('faceDist', faceDist)
+        # print('matches', matches)
+        # print('faceDist', faceDist)
 
         matchIndex = np.argmin(faceDist)
         # print('matchIndex', matchIndex)
 
         if matches[matchIndex]:
-            # print('Known Face Detected')
-            # print(studentIds[matchIndex])
+            print('Known Face Detected')
+            print(studentIds[matchIndex])
             y1, x2, y2, x1 = faceLoc
             y1, x2, y2, x1 = y1*4, x2*4, y2*4, x1*4
             bbox = 55+x1, 162+y1, x2-x1, y2-y1
