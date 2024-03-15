@@ -18,7 +18,27 @@ data = {
             'standing' : 'G',
             'year' : 3,
             'last_attendance_time' : '2024-03-15 10:45:20'
-    }
+    },
+
+    '852741' : {
+            'name' : 'Emily Blunt',
+            'Major' : 'Economics',
+            'starting_year' : 2022,
+            'total_attendance' : 12,
+            'standing' : 'B',
+            'year' : 2,
+            'last_attendance_time' : '2024-03-15 10:45:20'
+    },
+
+    '963852' : {
+            'name' : 'Elon Musk',
+            'Major' : 'Physics',
+            'starting_year' : 2020,
+            'total_attendance' : 7,
+            'standing' : 'G',
+            'year' : 4,
+            'last_attendance_time' : '2024-03-15 10:45:20'
+    },
 }
 
 for key, value in data.items():
