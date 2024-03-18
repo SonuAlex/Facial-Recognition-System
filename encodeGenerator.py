@@ -2,16 +2,35 @@ import cv2
 import face_recognition
 import pickle
 import os
+import firebase_admin
+from firebase_admin import credentials
+from firebase_admin import db
+from firebase_admin import storage
+
+cred = credentials.Certificate("serviceAccountKey.json")
+firebase_admin.initialize_app(cred, {
+    'databaseURL' : 'https://facerecognitiondatabase-4bf2d-default-rtdb.asia-southeast1.firebasedatabase.app/',
+    'storageBucket' : 'facerecognitiondatabase-4bf2d.appspot.com'
+})
 
 # Importing the student images
 folderModePath = 'Images'
 pathList = os.listdir(folderModePath)
 imgList = []
 studentIds = []
+
+print('Uploading Images to Firebase Storage')
 for path in pathList:
     imgList.append(cv2.imread(os.path.join(folderModePath, path)))
     studentIds.append(os.path.splitext(path)[0])
-print(studentIds)
+
+    fileName = f'{folderModePath}/{path}'
+    bucket = storage.bucket()
+    blob = bucket.blob(fileName)
+    blob.upload_from_filename(fileName)
+
+print('Images Upload Finished')
+print()
 
 def findEncodings(imagesList):
     encodeList = []
@@ -26,6 +45,7 @@ print('Encoding Started . . .')
 encodeListKnown = findEncodings(imgList)
 encodeListKnownWithIds = [encodeListKnown, studentIds]
 print('Encoding Complete')
+print()
 
 file = open("EncodeFile.p", 'wb')
 pickle.dump(encodeListKnownWithIds, file)

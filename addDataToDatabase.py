@@ -39,7 +39,19 @@ data = {
             'year' : 4,
             'last_attendance_time' : '2024-03-15 10:45:20'
     },
+
+    '321654' : {
+            'name' : 'Murtaza Hassan',
+            'Major' : 'Robotics',
+            'starting_year' : 2021,
+            'total_attendance' : 7,
+            'standing' : 'G',
+            'year' : 2,
+            'last_attendance_time' : '2024-03-15 10:45:20'
+    },
 }
 
+print('Loading Data to Database . . .')
 for key, value in data.items():
     ref.child(key).set(value)
+print('Database Updated')
