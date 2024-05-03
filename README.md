@@ -1,5 +1,5 @@
 # Facial Recognition System
-     This project implements a live facial recognition system. It uses computer vision techniques to detect and recognize faces in real-time. The system can be used for various applications such as access control, surveillance, and personal identification. It utilizes machine learning algorithms to train a model on a dataset of known faces and then uses that model to identify faces in a video stream or image. The system provides accurate and efficient face recognition capabilities, making it suitable for both small-scale and large-scale deployments.
+This project implements a live facial recognition system. It uses computer vision techniques to detect and recognize faces in real-time. The system can be used for various applications such as access control, surveillance, and personal identification. It utilizes machine learning algorithms to train a model on a dataset of known faces and then uses that model to identify faces in a video stream or image. The system provides accurate and efficient face recognition capabilities, making it suitable for both small-scale and large-scale deployments.
 
 ## Requirements
 There are some general library requirements for the project and some which are specific to individual methods. The general requirements are as follows.
