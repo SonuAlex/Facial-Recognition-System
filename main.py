@@ -4,6 +4,7 @@ import pickle
 import face_recognition
 import numpy as np
 import cvzone
+import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
 from firebase_admin import storage
@@ -73,7 +74,7 @@ while True:
                 y1, x2, y2, x1 = y1*4, x2*4, y2*4, x1*4
                 bbox = 55+x1, 162+y1, x2-x1, y2-y1
                 imgBackground = cvzone.cornerRect(imgBackground, bbox, rt=0)
-                id = studentIds(matchIndex)
+                id = studentIds[matchIndex]
                 if counter == 0:
                     cvzone.putTextRect(imgBackground,'Loading',(275,400))
                     cv2.imshow('Face Attendence', imgBackground)
@@ -90,7 +91,7 @@ while True:
                 # Get the image from the storage
                 blob = bucket.get_blob(f'Images/{id}.png')
                 array = np.frombuffer(blob.download_as_string(), np.uint8)
-                imgStudent = cv2.imgcode(array, cv2,COLOR_BGRA2BGR)
+                imgStudent = cv2.imdecode(array, cv2.IMREAD_COLOR)
                 # Update data of attendance
                 datetimeObject = datetime.strptime(studentInfo['last_attendance_time'],
                                               "%Y-%m-%d %H:%M:%S")
@@ -115,7 +116,7 @@ while True:
                 if counter <= 10:
                     cv2.putText(imgBackground, str(studentInfo['total_attendance']),(861,125),
                         cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),1)
-                    cv2.putText(imgBackground, str(studentInfo['major']),(1006,550),
+                    cv2.putText(imgBackground, str(studentInfo['Major']),(1006,550),
                         cv2.FONT_HERSHEY_COMPLEX,0.5,(255,255,255),1)
                     cv2.putText(imgBackground, str(id),(1006,493),
                         cv2.FONT_HERSHEY_COMPLEX,0.5,(255,255,255),1)
