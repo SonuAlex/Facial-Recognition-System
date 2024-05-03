@@ -4,6 +4,15 @@ import pickle
 import face_recognition
 import numpy as np
 import cvzone
+from firebase_admin import credentials
+from firebase_admin import db
+from firebase_admin import storage
+
+cred = credentials.Certificate("serviceAccountKey.json")
+firebase_admin.initialize_app(cred, {
+    'databaseURL' : 'https://facerecognitiondatabase-4bf2d-default-rtdb.asia-southeast1.firebasedatabase.app/',
+    'storageBucket' : 'facerecognitiondatabase-4bf2d.appspot.com'
+})
 
 cap = cv2.VideoCapture(0)
 cap.set(3, 640)
@@ -26,6 +35,9 @@ file.close()
 encodeListKnown, studentIds = encodeListKnownWithIds
 print('Encode File Loaded')
 
+modeType = 0
+counter = 0
+
 while True:
     success, img = cap.read()
 
@@ -36,7 +48,7 @@ while True:
     encodeCurrFrame = face_recognition.face_encodings(imgS, faceCurrFrame)
 
     imgBackground[162:162+480, 55:55+640] = img
-    imgBackground[44:44+633, 808:808+414] = imageModeList[1]
+    imgBackground[44:44+633, 808:808+414] = imageModeList[0]
 
     for encodeFace, faceLoc in zip(encodeCurrFrame, faceCurrFrame):
         matches = face_recognition.compare_faces(encodeListKnown, encodeFace)
@@ -54,6 +66,11 @@ while True:
             y1, x2, y2, x1 = y1*4, x2*4, y2*4, x1*4
             bbox = 55+x1, 162+y1, x2-x1, y2-y1
             imgBackground = cvzone.cornerRect(imgBackground, bbox, rt=0)
+
+            if counter == 0:
+                counter = 1
+        if counter != 0:
+            
 
     # cv2.imshow('Webcam', img)
     cv2.imshow('Face Attendence', imgBackground)
