@@ -4,6 +4,7 @@ import pickle
 import face_recognition
 import numpy as np
 import cvzone
+import time
 import firebase_admin
 from firebase_admin import credentials
 from firebase_admin import db
@@ -135,6 +136,7 @@ while True:
                     imgBackground[175:175+216, 909:909+216] = imgStudent
 
                 counter += 1
+                time.sleep(5)
 
                 if counter>=20:
                     counter = 0
